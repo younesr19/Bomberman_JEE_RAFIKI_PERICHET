@@ -1,0 +1,21 @@
+CREATE TABLE Joueur (
+	id SERIAL not null,
+	email varchar(50) not null,
+	motDePasse varchar(30) not null,
+	pseudo varchar(20) not null,
+	date_create date not null,
+	sexe int not null, 
+	PRIMARY KEY(id)
+);
+
+
+CREATE TABLE Historique (
+	id_partie int not null,
+	id_joueur int not null,
+	date_partie date not null,
+	type_partie int not null, 
+	score int not null,
+	aGagne boolean not null,
+	PRIMARY KEY (id_partie,id_joueur)
+
+);
