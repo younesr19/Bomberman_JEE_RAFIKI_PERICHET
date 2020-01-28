@@ -7,11 +7,12 @@
         <meta charset="utf-8" />
         <title>Connexion</title>
         <link type="text/css" rel="stylesheet" href="stylesheet.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/stylesheet.css" />
     </head>
     <body>
     	<div name="formulaire" id="outer">
     		<div name="formulaire" id="inner">
-		        <form method="post" action="Formulaire">
+		        <form method="post" action="Connexion">
 		            <fieldset>
 		                <legend>Connexion au jeu du Bomberman</legend>
 		                <p>Vous pouvez vous connecter via ce formulaire.</p>
@@ -27,6 +28,8 @@
 		                
 		                <input type="submit" value="Connexion" class="sansLabel" />
 		                <br />
+		                
+		                <a href="Inscription">Pas de compte ? Inscrivez-vous !</a>
 		                
 		                <p class="${empty forms.erreurs ? 'succes' : 'erreur'}">${forms.resultat}</p>
 		            </fieldset>

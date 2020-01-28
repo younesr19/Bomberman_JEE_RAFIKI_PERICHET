@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bdd.JDBCPostgres;
-import metier.InscriptionForm;
 import metier.Joueur;
 
 /**
- * Servlet implementation class Connexion
+ * Servlet implementation class Accueil
  */
-@WebServlet("/Connexion")
-public class Connexion extends HttpServlet {
+@WebServlet("/Accueil")
+public class Accueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Connexion() {
+    public Accueil() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +30,10 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
-
+		HttpSession session = request.getSession();
+		Joueur j = (Joueur) session.getAttribute("joueur");
+		request.setAttribute("joueur",j);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}
 
 	/**
@@ -41,21 +41,12 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		JDBCPostgres bdd_psql = new JDBCPostgres("etudiant","123456789");
-		boolean estPresent = bdd_psql.joueurExiste(request.getParameter("email"),request.getParameter("motdepasse"));
-		request.setAttribute("estPresent", estPresent);
-		if(estPresent) {
-			Joueur j = bdd_psql.getJoueur(request.getParameter("email"));
-			HttpSession session = request.getSession();
-			session.setAttribute("joueur",j);
-			response.sendRedirect("Accueil");
-			
-		}
-		else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
-
-		}
-
+		doGet(request, response);
+	}
+	
+	public HttpServletResponse redirige(String msg) {
+		System.out.println(msg);
+		return null;
 	}
 
 }

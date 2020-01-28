@@ -38,6 +38,10 @@ form .succes {
     color: #090;
 }
 
+form .erreur {
+    color: red;
+}
+
 
 
 #inner {

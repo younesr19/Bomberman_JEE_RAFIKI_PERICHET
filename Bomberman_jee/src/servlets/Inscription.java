@@ -6,23 +6,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bdd.JDBCPostgres;
 import metier.InscriptionForm;
 import metier.Joueur;
 
 /**
- * Servlet implementation class Connexion
+ * Servlet implementation class Inscription
  */
-@WebServlet("/Connexion")
-public class Connexion extends HttpServlet {
+@WebServlet("/Inscription")
+public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Connexion() {
+    public Inscription() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,30 +31,25 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
-
+		this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
 		JDBCPostgres bdd_psql = new JDBCPostgres("etudiant","123456789");
-		boolean estPresent = bdd_psql.joueurExiste(request.getParameter("email"),request.getParameter("motdepasse"));
-		request.setAttribute("estPresent", estPresent);
-		if(estPresent) {
-			Joueur j = bdd_psql.getJoueur(request.getParameter("email"));
-			HttpSession session = request.getSession();
-			session.setAttribute("joueur",j);
-			response.sendRedirect("Accueil");
-			
-		}
-		else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
-
-		}
-
+		
+		InscriptionForm form = new InscriptionForm();
+        Joueur joueur = form.inscrireJoueur(request);
+        request.setAttribute("forms", form);
+        if(form.getResultat()!="Échec de l'inscription.") {
+	        request.setAttribute("joueur", joueur);
+	        bdd_psql.insererJoueur(joueur);
+        }
+		this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 	}
 
 }

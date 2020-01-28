@@ -1,10 +1,15 @@
+DROP TABLE Joueur;
+DROP TABLE Historique;
+
+
 CREATE TABLE Joueur (
 	id SERIAL not null,
-	email varchar(50) not null,
-	motDePasse varchar(30) not null,
-	pseudo varchar(20) not null,
+	email varchar(100) not null,
+	motDePasse varchar(100) not null,
+	pseudo varchar(100) not null,
 	date_create date not null,
 	sexe int not null, 
+	niveau int not null,
 	PRIMARY KEY(id)
 );
 
