@@ -91,13 +91,14 @@ public class JDBCPostgres {
 	public void insererJoueur(Joueur j) {
 		
 		try {
-			PreparedStatement ps = this.connexion.prepareStatement("INSERT INTO Joueur (email,motDePasse,pseudo,date_create,sexe,niveau) VALUES (?,?,?,?,?,?);");
+			PreparedStatement ps = this.connexion.prepareStatement("INSERT INTO Joueur (email,motDePasse,pseudo,date_create,sexe,niveau,chemin_avatar) VALUES (?,?,?,?,?,?,?);");
 			ps.setString(1, j.getEmail());
 			ps.setString(2, hacheMDP(j.getMotDePasse()));
 			ps.setString(3, j.getPseudo());
 			ps.setObject(4, j.getDate_create());
 			ps.setLong(5, j.getSexe());
 			ps.setLong(6,j.getNiveau());
+			ps.setString(7, j.getCheminAvatar());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -133,7 +134,7 @@ public class JDBCPostgres {
 	}
 	public Joueur getJoueur(String email) {
 		try {
-			PreparedStatement ps = this.connexion.prepareStatement("SELECT id, email, motdepasse,pseudo,date_create, sexe, niveau FROM joueur WHERE email = ?");
+			PreparedStatement ps = this.connexion.prepareStatement("SELECT id, email, motdepasse,pseudo,date_create, sexe, niveau,chemin_avatar FROM joueur WHERE email = ?");
 			ps.setString(1, email);
 
 			ResultSet rs = ps.executeQuery();
@@ -147,6 +148,7 @@ public class JDBCPostgres {
 				j.setDate_create(date.toLocalDate());
 				j.setSexe(rs.getInt(6));
 				j.setNiveau(rs.getInt(7));
+				j.setCheminAvatar(rs.getString(8));
 				return j;
 			}
 

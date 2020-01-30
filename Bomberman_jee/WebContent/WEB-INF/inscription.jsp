@@ -11,7 +11,7 @@
     <body>
     	<div name="formulaire" id="outer">
     		<div name="formulaire" id="inner">
-		        <form method="post" action="Inscription">
+		        <form method="post" action="Inscription" enctype="multipart/form-data">
 		            <fieldset>
 		                <legend>Inscription au jeu du Bomberman</legend>
 		                <p>Vous pouvez vous inscrire via ce formulaire.</p>
@@ -42,8 +42,11 @@
 		              	Femme<input type="radio" id="sexe" name="sexe" value="2" required />
 		                
 		                <br />
-		                
-		                
+		                		               
+		               	<label for="avatar">Avatar <span class="requis">*</span></label>
+		                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+		                <br />
+		              
 		                <input type="submit" value="Inscription" class="sansLabel" />
 		                <br />
 		                

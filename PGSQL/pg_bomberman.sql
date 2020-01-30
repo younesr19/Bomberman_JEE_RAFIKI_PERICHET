@@ -9,6 +9,7 @@ CREATE TABLE Joueur (
 	pseudo varchar(100) not null,
 	date_create date not null,
 	sexe int not null, 
+	chemin_avatar varchar(100) not null,
 	niveau int not null,
 	PRIMARY KEY(id)
 );

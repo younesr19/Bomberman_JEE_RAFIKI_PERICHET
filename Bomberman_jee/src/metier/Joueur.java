@@ -27,6 +27,7 @@ public class Joueur implements Serializable {
 	private LocalDate date_create;
 	private int sexe;
 	private int niveau;
+	private String cheminAvatar;
 	
 	
 	public Joueur() {}
@@ -82,7 +83,12 @@ public class Joueur implements Serializable {
 	public void setNiveau(int niveau) {
 		this.niveau = niveau;
 	}
-	
+	public String getCheminAvatar() {
+		return cheminAvatar;
+	}
+	public void setCheminAvatar(String cheminAvatar) {
+		this.cheminAvatar=cheminAvatar;
+	}
 	
 	
 }
