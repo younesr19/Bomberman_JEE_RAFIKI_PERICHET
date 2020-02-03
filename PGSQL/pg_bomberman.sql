@@ -1,3 +1,4 @@
+/*
 DROP TABLE Joueur;
 DROP TABLE Historique;
 
@@ -17,7 +18,7 @@ CREATE TABLE Joueur (
 
 CREATE TABLE Historique (
 	id_partie int not null,
-	id_joueur int not null,
+	id_joueur int REFERENCES Joueur (id),
 	date_partie date not null,
 	type_partie int not null, 
 	score int not null,
@@ -25,3 +26,20 @@ CREATE TABLE Historique (
 	PRIMARY KEY (id_partie,id_joueur)
 
 );
+*/
+CREATE TABLE Ami (
+	id_ami1 int REFERENCES Joueur (id),
+	id_ami2 int REFERENCES Joueur (id),
+	PRIMARY KEY (id_ami1,id_ami2)
+
+
+)
+
+/*
+INSERT INTO Historique values
+(4845,1,'30/12/1998',1,7500,false),
+(4845,2,'30/12/1998',1,15450,true),
+(4845,3,'30/12/1998',1,12500,false),
+(5096,1,'21/01/2001',2,25000,true),
+(5096,3,'21/01/2001',2,10400,false)
+*/

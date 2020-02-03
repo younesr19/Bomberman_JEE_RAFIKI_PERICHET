@@ -12,11 +12,13 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.sql.Date;
 
 import javax.xml.bind.DatatypeConverter;
 
 import metier.Joueur;
+import metier.Partie;
 
 import java.io.UnsupportedEncodingException;
 import java.security.*;
@@ -160,5 +162,44 @@ public class JDBCPostgres {
 		}
 		return null;
 	}
+	
+	public ArrayList<Partie> getHistorique(int id_joueur){
+		ArrayList<Partie> historique = new ArrayList<Partie>();
+		
+		try {
+			PreparedStatement ps = 
+					this.connexion.prepareStatement("select h2.id_partie, h2.id_joueur, pseudo,h2.date_partie, h2.type_partie, h2.score, h2.agagne from historique h1 JOIN historique h2 ON h1.id_partie=h2.id_partie JOIN Joueur j ON h2.id_joueur=j.id WHERE h1.id_joueur= ? ORDER BY h2.date_partie DESC, h2.id_partie DESC, h2.score DESC ;");
+			ps.setInt(1, id_joueur);
+
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Date date = (Date) rs.getObject(4);
+				
+				
+				Partie partie = new Partie(
+				rs.getInt(1),
+				rs.getInt(2),
+				rs.getString(3),
+				date,
+				rs.getInt(5),
+				rs.getInt(6),
+				rs.getBoolean(7)
+				);
+				
+				historique.add(partie);
+			}
+
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return historique;
+		
+		
+	}
+
 	
 }	

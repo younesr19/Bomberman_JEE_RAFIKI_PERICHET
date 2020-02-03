@@ -42,7 +42,7 @@ form .erreur {
     color: red;
 }
 
-
+.inline{display:inline-block}
 
 #inner {
 	display: table;

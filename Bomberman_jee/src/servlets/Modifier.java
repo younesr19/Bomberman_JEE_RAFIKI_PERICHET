@@ -6,22 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import bdd.JDBCPostgres;
-import metier.Joueur;
 
 /**
- * Servlet implementation class Accueil
+ * Servlet implementation class Modifier
  */
-@WebServlet("/Accueil")
-public class Accueil extends HttpServlet {
+@WebServlet("/Modifier")
+public class Modifier extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Accueil() {
+    public Modifier() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +27,7 @@ public class Accueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		Joueur j = (Joueur) session.getAttribute("joueur");
-		
-
-		
-		
-		if(j==null) {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
-
-		}else {
-			request.setAttribute("joueur",j);
-			JDBCPostgres bdd_psql = new JDBCPostgres("etudiant","123456789");
-			request.setAttribute("historique", bdd_psql.getHistorique(j.getId()));
-			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -54,11 +36,6 @@ public class Accueil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-	
-	public HttpServletResponse redirige(String msg) {
-		System.out.println(msg);
-		return null;
 	}
 
 }
