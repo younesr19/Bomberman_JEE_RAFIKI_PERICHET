@@ -2,6 +2,7 @@ package metier;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * 
@@ -24,14 +25,19 @@ public class Joueur implements Serializable {
 	private String email;
 	private String motDePasse;
 	private String pseudo;
-	private LocalDate date_create;
+	private Date date_create;
 	private int sexe;
 	private int niveau;
 	private String cheminAvatar;
 	
 	
+	private int nbr_victoire;
+	private int nbr_defaite;
+	private int score_max;
+	
+	
 	public Joueur() {}
-	public Joueur(String email, String motDePasse, String pseudo, LocalDate date_create, int sexe) {
+	public Joueur(String email, String motDePasse, String pseudo, Date date_create, int sexe) {
 		super();
 		this.id=0;
 		this.email = email;
@@ -59,10 +65,10 @@ public class Joueur implements Serializable {
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
 	}
-	public LocalDate getDate_create() {
+	public Date getDate_create() {
 		return date_create;
 	}
-	public void setDate_create(LocalDate date_create) {
+	public void setDate_create(Date date_create) {
 		this.date_create = date_create;
 	}
 	public int getSexe() {
@@ -88,6 +94,24 @@ public class Joueur implements Serializable {
 	}
 	public void setCheminAvatar(String cheminAvatar) {
 		this.cheminAvatar=cheminAvatar;
+	}
+	public int getNbr_victoire() {
+		return nbr_victoire;
+	}
+	public void setNbr_victoire(int nbr_victoire) {
+		this.nbr_victoire = nbr_victoire;
+	}
+	public int getNbr_defaite() {
+		return nbr_defaite;
+	}
+	public void setNbr_defaite(int nbr_defaite) {
+		this.nbr_defaite = nbr_defaite;
+	}
+	public int getScore_max() {
+		return score_max;
+	}
+	public void setScore_max(int score_max) {
+		this.score_max = score_max;
 	}
 	
 	

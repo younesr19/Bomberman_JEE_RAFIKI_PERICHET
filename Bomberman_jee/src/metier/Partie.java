@@ -24,6 +24,16 @@ public class Partie {
 		this.type_partie = type_partie;
 		this.score = score;
 		this.agagne = agagne;
+	} 
+	public Partie(int id_partie, int id_joueur, Date date_partie, int type_partie, int score, boolean agagne) {
+		super();
+
+		this.id_partie = id_partie;
+		this.id_joueur = id_joueur;
+		this.date_partie = date_partie;
+		this.type_partie = type_partie;
+		this.score = score;
+		this.agagne = agagne;
 	}
 	public int getId_partie() {
 		return id_partie;

@@ -32,8 +32,16 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		JDBCPostgres bdd_psql = new JDBCPostgres("etudiant","123456789");
 		HttpSession session = request.getSession();
-		session.removeAttribute("joueur");
+		Joueur joueur = (Joueur) session.getAttribute("joueur");
+		if(joueur!=null) {
+			bdd_psql.supprimerConnexion(((Joueur) session.getAttribute("joueur")).getId());
+
+			session.removeAttribute("joueur");
+		}
+	
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
 
 	}
@@ -50,6 +58,8 @@ public class Connexion extends HttpServlet {
 			Joueur j = bdd_psql.getJoueur(request.getParameter("email"));
 			HttpSession session = request.getSession();
 			session.setAttribute("joueur",j);
+			bdd_psql.insererConnexion(session.getId(), j.getId());
+			System.out.println("connexion de "+j.getPseudo());
 			response.sendRedirect("Accueil");
 			
 		}

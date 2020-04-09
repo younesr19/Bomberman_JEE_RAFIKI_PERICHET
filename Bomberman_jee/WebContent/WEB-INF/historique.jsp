@@ -22,10 +22,12 @@
 	    <p><strong>Type de partie : </strong>${partie.type_partie}</p>
 	</a>
 	<div id="${partie.id_partie}" class="content-histo list-group-item" style="display:none;margin-right:50px;">
+	<table>
 		<c:set var="count" value="1"></c:set>
 		<c:forEach items="${ historique }" var="partie_detail" varStatus="status_detail">
+			<tr>
 			<c:if test="${partie.id_partie == partie_detail.id_partie}">
-				
+				<td>
 				 <c:choose>
 		   			 <c:when test="${count == 1 }">
 						   <img src="${pageContext.request.contextPath}/icone/gold_medal.png">
@@ -40,12 +42,20 @@
 		   			 </c:when>
 				    <c:otherwise>${count}</c:otherwise>
 	 			</c:choose>
-				  <strong>${partie_detail.pseudo}</strong>  ${partie_detail.score}<br>
+	 			</td>
+	 			<td> <strong>${partie_detail.pseudo}&nbsp;&nbsp;&nbsp;</strong></td>
+	 			<td> ${partie_detail.score}</td>
+	 			<td>&nbsp;&nbsp;&nbsp;points</td>
+	 			<c:if test="${partie.id_joueur != partie_detail.id_joueur}">
+	 			<td><a href="Profil?id=${partie_detail.id_joueur}&ajoutAmi=0"> &nbsp;&nbsp;&nbsp; voir le profil</a></td>
+	 			</c:if>
 				<c:set var="count" value="${count+1 }"></c:set>
 			</c:if>
+			</tr>
 		</c:forEach>
 		<c:set var="count" value="1"></c:set>
-		
+	</table>
+	
 	</div>
 	</c:if>
 	</c:forEach>

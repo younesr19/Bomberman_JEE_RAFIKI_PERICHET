@@ -13,6 +13,8 @@
 
   <title>Accueil</title>
 
+  <link href="${pageContext.request.contextPath}/css/stylesheet-profil.css" rel="stylesheet" type="text/css">
+
   <!-- Bootstrap core CSS -->
   <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,28 +34,31 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <c:choose>
 		    <c:when test="${ joueur.sexe == 1 }">
-		       <div class="sidebar-heading"><aa style="color:blue;">${joueur.pseudo}</aa>    #${joueur.niveau} 
+		       <div class="sidebar-heading"><h4 class="blue">${joueur.pseudo}</h4>
 		       <img style="width:150px;height:auto;border-radius:50%; border:solid blue 3px" src="${pageContext.request.contextPath}/avatar/${joueur.cheminAvatar}"/>
 		       
 		       </div>
 		    </c:when>
 		    <c:when test="${ joueur.sexe == 2 }">
-		       <div class="sidebar-heading"><aa style="color:red;">${joueur.pseudo}</aa>    #${joueur.niveau}
+		       <div class="sidebar-heading pink"><h4 class="pink">${joueur.pseudo}</h4> 
 		       <img style="width:150px;height:auto;border-radius:50%; border:solid red 3px;" src="${pageContext.request.contextPath}/avatar/${joueur.cheminAvatar}"/>
 		       </div> 
 		    </c:when>
 		    <c:otherwise></c:otherwise>
 	 </c:choose>
       <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action bg-light" onclick="changeContent('ami')">Ami</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light" onclick="changeContentAmi('liste_ami')">Ami</a>
+        <%@include file="ami.jsp" %>
+
         <a href="#" class="list-group-item list-group-item-action bg-light" onclick="changeContent('historique')">Historique</a>
         <a href="#" class="list-group-item list-group-item-action bg-light" onclick="changeContent('tata')">Téléchargez le jeu !</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Classement</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profil</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light"onclick="changeContent('classement')">Classement</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light" onclick="changeContent('profil')">Profil</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
+    
+    
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -76,9 +81,8 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="Connexion">Déconnexion</a>
-                <a class="dropdown-item" href="#">Modifier le profil</a>
+                <a class="dropdown-item" href="Modifier">Modifier le profil</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
           </ul>
@@ -88,29 +92,40 @@
 
 
 
-      <div class="container-fluid content" id="accueil" style="display:none;">
+      <div class="container-fluid content" id="accueil" style="display:block;">
         <h1 class="mt-4">Bienvenue ${joueur.pseudo} !</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+        <p>Bomberman (ボンバーマン, Bonbāman?) est une série de jeux vidéo de Hudson Soft où le joueur incarne un poseur de bombes, le but étant de faire exploser les adversaires/ennemis pour gagner. </p>
+       <p> Le jeu a connu un grand succès, surtout grâce à son mode multijoueur qui, suivant les machines, permet de jouer jusqu'à une dizaine de personnes en même temps. </p>        
       </div>
       
-      <div class="container-fluid content" id="ami" style="background-color: blue;display:none;">
+      <div class="container-fluid content" id="ami" style="display:none;">
         <h1 class="mt-4">Bienvenue ${joueur.pseudo} !</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+        <c:forEach items="${liste_joueurco}" var="joueur_co">
+        	
+        	${joueur_co.key}  :  ${joueur_co.value} <br>
+        
+        </c:forEach>
       </div>
       
-      <div class="container-fluid content" id="historique" style=display:block;">
+      <div class="container-fluid content" id="historique" style="display:none;">
         <%@include file="historique.jsp" %>
       </div>
       
-      <div class="container-fluid content" id="tata" style="background-color: purple;display:none;">
-        <h1 class="mt-4">Bienvenue ${joueur.pseudo} !</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+      <div class="container-fluid content" id="tata" style="display:none;">
+        <h1 class="mt-4">Là où le jeu peut être téléchargé</h1>
       </div>
       
       
+       <div class="container-fluid content" id="profil" style="display:none;">
+       		<c:set var="joueurn" value="${joueur}" scope="request" />
+		    <%@include file="profil.jsp" %>
+
+      </div>
+      
+        <div class="container-fluid content" id="classement" style="display:none;">
+		    <%@include file="classement.jsp" %>
+
+     </div>
       
       
       
@@ -136,6 +151,18 @@
     	$(".content").css("display", "none");
 
     	$("#"+id).css("display", "block");
+    	
+    }
+    function changeContentAmi(id) {
+    	let test = $("#"+id).css("display");
+		if(test=="block"){
+	    	$("#"+id).css("display", "none");
+
+		}
+		else{
+	    	$("#"+id).css("display", "block");
+
+		}
     	
     }
   </script>

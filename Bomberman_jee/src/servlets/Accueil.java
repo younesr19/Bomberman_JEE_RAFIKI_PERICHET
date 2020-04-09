@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import bdd.JDBCPostgres;
 import metier.Joueur;
 
+import java.util.Date;
+
 /**
  * Servlet implementation class Accueil
  */
@@ -34,8 +36,8 @@ public class Accueil extends HttpServlet {
 		HttpSession session = request.getSession();
 		Joueur j = (Joueur) session.getAttribute("joueur");
 		
-
-		
+		Date d = new Date(session.getCreationTime());
+	
 		
 		if(j==null) {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
@@ -44,6 +46,9 @@ public class Accueil extends HttpServlet {
 			request.setAttribute("joueur",j);
 			JDBCPostgres bdd_psql = new JDBCPostgres("etudiant","123456789");
 			request.setAttribute("historique", bdd_psql.getHistorique(j.getId()));
+			request.setAttribute("liste_joueurco",bdd_psql.getJoueursConnectes());
+			request.setAttribute("liste_ami", bdd_psql.getListeAmi(j.getId()));
+			request.setAttribute("classement", bdd_psql.getClassement());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 		}
 	}

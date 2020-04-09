@@ -26,7 +26,7 @@ CREATE TABLE Historique (
 	PRIMARY KEY (id_partie,id_joueur)
 
 );
-*/
+
 CREATE TABLE Ami (
 	id_ami1 int REFERENCES Joueur (id),
 	id_ami2 int REFERENCES Joueur (id),
@@ -35,6 +35,12 @@ CREATE TABLE Ami (
 
 )
 
+CREATE TABLE Connectes( 
+	id_session varchar(100) not null,
+	id_joueur  int REFERENCES Joueur(id),
+	PRIMARY KEY (id_session)
+);
+*/
 /*
 INSERT INTO Historique values
 (4845,1,'30/12/1998',1,7500,false),
@@ -43,3 +49,5 @@ INSERT INTO Historique values
 (5096,1,'21/01/2001',2,25000,true),
 (5096,3,'21/01/2001',2,10400,false)
 */
+
+
